@@ -2,8 +2,8 @@ export interface Oferta {
   id: string;
   imagemUrl: string;
   titulo: string;
-  precoAnterior?: number;
-  precoAtual: number;
+  precoAnterior?: string;
+  precoAtual: string;
   desconto?: number;
   marketplace: string;
   linkAfiliado: string;
