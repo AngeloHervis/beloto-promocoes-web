@@ -149,61 +149,95 @@ export default function OfertaPage() {
   }
 
   return (
-    <div className="space-y-8 pb-12">
-      <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 lg:p-8">
-          <div className="relative">
-            <div className="rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 aspect-square overflow-hidden">
+    <div className="space-y-4 md:space-y-8 pb-8 md:pb-12 px-4 md:px-0">
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 p-4 md:p-6 lg:p-8">
+          <div className="relative order-1 lg:order-1">
+            <div className="rounded-lg md:rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 aspect-square overflow-hidden">
               <img
                 src={oferta?.imagemUrl || "/placeholder.svg"}
                 alt={oferta?.titulo}
-                className="h-full w-full object-contain p-8"
+                className="h-full w-full object-contain p-4 md:p-8"
               />
             </div>
             {desconto && (
-              <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg">
+              <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 md:px-4 md:py-2 rounded-full font-bold text-sm md:text-lg shadow-lg">
                 -{desconto}%
               </div>
             )}
           </div>
 
-          <div className="flex flex-col">
-            <h1 className="text-3xl font-bold text-slate-900 leading-tight">{oferta?.titulo}</h1>
+          <div className="flex flex-col order-2 lg:order-2">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 leading-tight">{oferta?.titulo}</h1>
 
-            {oferta?.descricao && <p className="mt-4 text-slate-600 leading-relaxed">{oferta.descricao}</p>}
+            {oferta?.descricao && <p className="mt-3 md:mt-4 text-sm md:text-base text-slate-600 leading-relaxed">{oferta.descricao}</p>}
 
-            <div className="mt-6 p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl">
+            <div className="mt-4 md:mt-6 p-4 md:p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg md:rounded-xl order-2 md:order-2">
               {oferta?.precoAnterior && (
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-sm text-slate-500">De:</span>
-                  <span className="text-lg text-slate-500 line-through">{oferta.precoAnterior}</span>
+                <div className="flex items-center gap-2 mb-1 md:mb-2">
+                  <span className="text-xs md:text-sm text-slate-500">De:</span>
+                  <span className="text-base md:text-lg text-slate-500 line-through">{oferta.precoAnterior}</span>
                 </div>
               )}
-              <div className="flex items-baseline gap-3">
-                <span className="text-sm text-slate-600">Por:</span>
-                <span className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+              <div className="flex items-baseline gap-2 md:gap-3">
+                <span className="text-xs md:text-sm text-slate-600">Por:</span>
+                <span className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                   {oferta.precoAtual}
                 </span>
               </div>
             </div>
 
-            <div className={`mt-6 p-4 border rounded-xl flex items-start gap-3 ${storeBadge.color}`}>
+            {/* Botão principal - em destaque no mobile */}
+            <div className="mt-4 md:mt-6 order-3 md:order-4">
+              <a
+                href={linkProduto}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-3 md:px-6 md:py-4 rounded-lg md:rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl text-sm md:text-base"
+              >
+                <ExternalLink className="w-4 h-4 md:w-5 md:h-5" />
+                Visitar a loja
+              </a>
+            </div>
+
+            {/* Botões secundários - menores no mobile */}
+            <div className="mt-3 md:mt-4 flex gap-2 md:gap-3 order-4 md:order-5">
+              <div className="w-12 md:w-14">
+                <BotaoFavoritarGrande ofertaId={oferta?.id} />
+              </div>
+              <button
+                onClick={() => setModalAberto(true)}
+                className="px-3 py-2 md:px-4 md:py-3 rounded-lg md:rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-green-500 hover:text-green-600 transition-all"
+                title="Notificações"
+              >
+                <Bell className="w-4 h-4 md:w-5 md:h-5" />
+              </button>
+              <button
+                onClick={compartilhar}
+                className="px-3 py-2 md:px-4 md:py-3 rounded-lg md:rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-green-500 hover:text-green-600 transition-all"
+                title="Compartilhar"
+              >
+                <Share2 className="w-4 h-4 md:w-5 md:h-5" />
+              </button>
+            </div>
+
+            <div className={`mt-4 md:mt-6 p-3 md:p-4 border rounded-lg md:rounded-xl flex items-start gap-3 order-5 md:order-3 ${storeBadge.color}`}>
               <div
-                className={`w-10 h-10 rounded-full ${storeBadge.iconBg} flex items-center justify-center flex-shrink-0`}
+                className={`w-8 h-8 md:w-10 md:h-10 rounded-full ${storeBadge.iconBg} flex items-center justify-center flex-shrink-0`}
               >
                 {storeBadge.logo ? (
                   <img
                     src={storeBadge.logo || "/placeholder.svg"}
                     alt={storeBadge.name}
-                    className="w-6 h-6 object-contain"
+                    className="w-4 h-4 md:w-6 md:h-6 object-contain"
                   />
                 ) : (
-                  <Shield className="w-5 h-5 text-white" />
+                  <Shield className="w-3 h-3 md:w-5 md:h-5 text-white" />
                 )}
               </div>
               <div>
-                <p className="font-semibold text-slate-900">Loja verificada</p>
-                <p className="text-sm text-slate-700 mt-1">
+                <p className="font-semibold text-slate-900 text-sm md:text-base">Loja verificada</p>
+                <p className="text-xs md:text-sm text-slate-700 mt-1">
                   {storeBadge.name === "Amazon" ? (
                     <>
                       Se for comprar pegue FRETE GRÁTIS! Com Amazon PRIME (30 dias grátis){" "}
@@ -259,40 +293,13 @@ export default function OfertaPage() {
                 </p>
               </div>
             </div>
-
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <a
-                href={linkProduto}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
-              >
-                <ExternalLink className="w-5 h-5" />
-                Visitar a loja
-              </a>
-              <button className="px-6 py-4 rounded-xl border-2 border-slate-200 bg-white hover:border-red-500 transition-all flex items-center justify-center">
-                <BotaoFavoritarGrande ofertaId={oferta?.id} />
-              </button>
-              <button
-                onClick={() => setModalAberto(true)}
-                className="px-6 py-4 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-green-500 hover:text-green-600 transition-all"
-              >
-                <Bell className="w-5 h-5" />
-              </button>
-              <button
-                onClick={compartilhar}
-                className="px-6 py-4 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-green-500 hover:text-green-600 transition-all"
-              >
-                <Share2 className="w-5 h-5" />
-              </button>
-            </div>
           </div>
         </div>
       </div>
 
       <div>
-        <h2 className="text-2xl font-bold text-slate-900 mb-6">Você pode gostar</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 md:mb-6">Você pode gostar</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {sugestoes.map((o) => (
             <CardOferta key={o.id} oferta={o} />
           ))}

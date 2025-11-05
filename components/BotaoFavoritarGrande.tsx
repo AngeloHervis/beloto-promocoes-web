@@ -47,11 +47,11 @@ export function BotaoFavoritarGrande({ ofertaId, className = "" }: Props) {
     <button
       onClick={alternar}
       disabled={carregando}
-      className={`transition-all disabled:opacity-50 ${className}`}
+      className={`w-full px-2 py-2 md:px-3 md:py-3 rounded-lg md:rounded-xl border-2 border-slate-200 bg-white hover:border-red-500 transition-all flex items-center justify-center disabled:opacity-50 ${className}`}
       aria-label={favoritado ? "Remover dos favoritos" : "Adicionar aos favoritos"}
     >
       <Heart
-        className={`h-6 w-6 transition-all ${
+        className={`h-4 w-4 md:h-5 md:w-5 transition-all ${
           favoritado ? "fill-red-500 text-red-500" : "text-slate-400 hover:text-red-500"
         }`}
       />
