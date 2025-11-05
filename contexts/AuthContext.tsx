@@ -5,8 +5,20 @@ import { api } from "@/services/api"
 
 interface Usuario {
   id: string
-  nome: string
+  nome?: string
   email: string
+}
+
+interface LoginResponse {
+  accessToken: string
+  tokenType: string
+  expiresIn: number
+  refreshToken: string
+  user: {
+    id: string
+    email: string
+    nome?: string
+  }
 }
 
 interface AuthContextValue {
@@ -42,11 +54,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const login = useCallback(async (email: string, senha: string) => {
-    const { data } = await api.post<{ token: string; usuario: Usuario }>(`/auth/login`, { email, senha })
-    const t = data.token
+    const { data } = await api.post<LoginResponse>(`/auth/login`, { email, senha })
+    const t = data.accessToken
+    const user: Usuario = {
+      id: data.user.id,
+      email: data.user.email,
+      nome: data.user.nome || data.user.email.split("@")[0], // Use email prefix as fallback for nome
+    }
     setToken(t)
-    setUsuario(data.usuario)
-    if (typeof window !== "undefined") localStorage.setItem("token", t)
+    setUsuario(user)
+    if (typeof window !== "undefined") {
+      localStorage.setItem("token", t)
+      localStorage.setItem("refreshToken", data.refreshToken)
+    }
   }, [])
 
   const registrar = useCallback(async (nome: string, email: string, senha: string) => {
@@ -56,7 +76,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(() => {
     setUsuario(null)
     setToken(null)
-    if (typeof window !== "undefined") localStorage.removeItem("token")
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token")
+      localStorage.removeItem("refreshToken")
+    }
   }, [])
 
   const value = useMemo<AuthContextValue>(

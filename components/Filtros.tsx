@@ -1,5 +1,5 @@
 "use client"
-import { SlidersHorizontal, Tag } from "lucide-react"
+import { SlidersHorizontal } from "lucide-react"
 
 interface Props {
   ordem: string
@@ -24,11 +24,6 @@ export function Filtros({ ordem, onChangeOrdem }: Props) {
         <option value="preco_desc">Maior preço</option>
         <option value="mais_clicado">Mais clicado</option>
       </select>
-
-      <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-400 to-red-500 px-5 py-2.5 text-sm font-bold text-white hover:from-orange-500 hover:to-red-600 transition-all shadow-md hover:shadow-lg">
-        <Tag className="h-4 w-4" />
-        Cupons
-      </button>
     </div>
   )
 }

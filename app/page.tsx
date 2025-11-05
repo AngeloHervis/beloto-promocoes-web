@@ -1,12 +1,13 @@
 "use client"
 import { useEffect, useState } from "react"
-import { Modal } from "@/components/Modal"
+import { ModalWhatsApp } from "@/components/ModalWhatsApp"
 import { CardOferta } from "@/components/CardOferta"
 import { Buscador } from "@/components/Buscador"
 import { Filtros } from "@/components/Filtros"
 import type { Oferta } from "@/types/oferta"
 import { api } from "@/services/api"
-import { MessageCircle, Send, Sparkles } from "lucide-react"
+import { Sparkles } from "lucide-react"
+import { WhatsAppIcon } from "@/components/WhatsAppIcon"
 
 export default function HomePage() {
   const [ofertas, setOfertas] = useState<Oferta[]>([])
@@ -20,10 +21,29 @@ export default function HomePage() {
       setCarregando(true)
       setErro(null)
       try {
-        const { data } = await api.get<Oferta[]>("/ofertas/recentes")
-        setOfertas(data ?? [])
+        const { data } = await api.get("/ofertas/recentes")
+        console.log("[v0] API Response:", data)
+
+        // Handle different possible response formats
+        let ofertasArray: Oferta[] = []
+
+        if (Array.isArray(data)) {
+          // If data is directly an array
+          ofertasArray = data
+        } else if (data && typeof data === "object" && Array.isArray(data.ofertas)) {
+          // If data is an object with an ofertas property
+          ofertasArray = data.ofertas
+        } else if (data && typeof data === "object" && Array.isArray(data.data)) {
+          // If data is an object with a data property
+          ofertasArray = data.data
+        }
+
+        console.log("[v0] Ofertas array:", ofertasArray)
+        setOfertas(ofertasArray)
       } catch (e) {
+        console.error("[v0] Error loading ofertas:", e)
         setErro("Falha ao carregar ofertas.")
+        setOfertas([]) // Ensure ofertas is always an array
       } finally {
         setCarregando(false)
       }
@@ -33,7 +53,7 @@ export default function HomePage() {
 
   return (
     <div className="space-y-6">
-      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-violet-600 p-8 shadow-xl md:p-12">
+      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 p-8 shadow-xl md:p-12">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
         <div className="absolute right-0 top-0 h-full w-1/2 opacity-20">
           <div className="absolute right-12 top-12 h-40 w-40 rounded-full bg-white/30 blur-3xl" />
@@ -58,15 +78,8 @@ export default function HomePage() {
               onClick={() => setModalAberto(true)}
               className="flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 font-bold text-indigo-600 shadow-xl transition-all hover:scale-105 hover:shadow-2xl"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5" />
               WhatsApp
-            </button>
-            <button
-              onClick={() => setModalAberto(true)}
-              className="flex items-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/20"
-            >
-              <Send className="h-5 w-5" />
-              Telegram
             </button>
           </div>
         </div>
@@ -95,17 +108,7 @@ export default function HomePage() {
         </div>
       )}
 
-      <Modal estaAberto={modalAberto} aoFechar={() => setModalAberto(false)}>
-        <div className="p-6">
-          <h2 className="mb-2 text-2xl font-bold text-slate-900">Entrar no Grupo</h2>
-          <p className="mb-6 text-slate-600">
-            Escaneie o QR Code ou clique no botão abaixo para entrar no nosso grupo.
-          </p>
-          <button className="w-full rounded-xl bg-indigo-500 px-6 py-3 font-semibold text-white hover:bg-indigo-600 transition-colors shadow-lg">
-            Entrar agora
-          </button>
-        </div>
-      </Modal>
+      <ModalWhatsApp estaAberto={modalAberto} aoFechar={() => setModalAberto(false)} />
     </div>
   )
 }

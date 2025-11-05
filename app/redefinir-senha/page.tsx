@@ -9,11 +9,11 @@ import { KeyRound, ArrowLeft } from "lucide-react"
 
 export default function RedefinirSenhaPage() {
   const router = useRouter()
-  
+
   // 1. ESTADO PARA GUARDAR OS DOIS TOKENS
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [refreshToken, setRefreshToken] = useState<string | null>(null)
-  
+
   const [senha, setSenha] = useState("")
   const [confirmarSenha, setConfirmarSenha] = useState("")
   const [erro, setErro] = useState<string | null>(null)
@@ -59,14 +59,14 @@ export default function RedefinirSenhaPage() {
     setCarregando(true)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/redefinir-senha`, {        method: "POST",
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/redefinir-senha`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        // O body agora envia os dois tokens
         body: JSON.stringify({
           Token: accessToken,
-          RefreshToken: refreshToken, 
+          RefreshToken: refreshToken,
           NovaSenha: senha,
         }),
       })
@@ -79,7 +79,6 @@ export default function RedefinirSenhaPage() {
 
       alert("Senha redefinida com sucesso!")
       router.push("/login")
-
     } catch (error: any) {
       setErro(error.message || "Erro ao redefinir senha. Tente novamente.")
     } finally {
@@ -118,13 +117,7 @@ export default function RedefinirSenhaPage() {
               </div>
             )}
 
-            <Input
-              tipo="password"
-              placeholder="Nova Senha"
-              valor={senha}
-              aoMudar={setSenha}
-              className="mb-4"
-            />
+            <Input tipo="password" placeholder="Nova Senha" valor={senha} aoMudar={setSenha} className="mb-4" />
 
             <Input
               tipo="password"
@@ -136,8 +129,8 @@ export default function RedefinirSenhaPage() {
 
             <Botao type="submit" titulo={carregando ? "Redefinindo..." : "Redefinir Senha"} className="w-full" />
           </form>
-           {/* ... (seu JSX de "Voltar para o login" não muda) ... */}
-           <div className="mt-6 text-center">
+          {/* ... (seu JSX de "Voltar para o login" não muda) ... */}
+          <div className="mt-6 text-center">
             <Link
               href="/login"
               className="inline-flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-700 font-medium transition-colors"

@@ -2,21 +2,21 @@ import type { Metadata } from "next"
 import { Shield, Eye, Lock, UserCheck, Database, AlertCircle } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Políticas de Privacidade - Beloto Ofertas",
+  title: "Políticas de Privacidade - Beloto Promoções",
   description: "Conheça nossas políticas de privacidade e proteção de dados",
 }
 
 export default function PoliticasPage() {
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white mb-8">
+      <div className="bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl p-8 md:p-12 text-white mb-8">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center">
             <Shield className="w-8 h-8" />
           </div>
           <div>
             <h1 className="text-4xl md:text-5xl font-bold">Políticas de Privacidade</h1>
-            <p className="text-indigo-100 mt-2">Última atualização: Janeiro de 2025</p>
+            <p className="text-green-100 mt-2">Última atualização: Janeiro de 2025</p>
           </div>
         </div>
       </div>
@@ -24,17 +24,17 @@ export default function PoliticasPage() {
       <div className="prose prose-slate max-w-none space-y-6">
         <div className="bg-white rounded-xl shadow-sm p-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-            <Eye className="w-6 h-6 text-indigo-600" />
+            <Eye className="w-6 h-6 text-green-600" />
             Introdução
           </h2>
           <p className="text-slate-600 leading-relaxed">
-            O Beloto Ofertas está comprometido em proteger sua privacidade e seus dados pessoais. Esta Política de
+            O Beloto Promoções está comprometido em proteger sua privacidade e seus dados pessoais. Esta Política de
             Privacidade descreve como coletamos, usamos, armazenamos e protegemos suas informações quando você utiliza
             nossa plataforma.
           </p>
           <p className="text-slate-600 leading-relaxed mt-4">
-            Ao utilizar o Beloto Ofertas, você concorda com as práticas descritas nesta política. Recomendamos que você
-            leia atentamente este documento.
+            Ao utilizar o Beloto Promoções, você concorda com as práticas descritas nesta política. Recomendamos que
+            você leia atentamente este documento.
           </p>
         </div>
 
@@ -206,11 +206,11 @@ export default function PoliticasPage() {
             conosco:
           </p>
           <div className="bg-slate-50 rounded-lg p-4 space-y-2 text-sm">
-            <p className="text-slate-600">
-              <span className="font-semibold text-slate-900">Email:</span> privacidade@belotoofertas.com.br
+            <p className="text-slate-600 flex items-center gap-2">
+              <span className="font-semibold text-slate-900">Email:</span> contato@belotoplays.com.br
             </p>
-            <p className="text-slate-600">
-              <span className="font-semibold text-slate-900">WhatsApp:</span> (11) 99999-9999
+            <p className="text-slate-600 flex items-center gap-2">
+              <span className="font-semibold text-slate-900">WhatsApp:</span> +55 11 98810-2938
             </p>
           </div>
         </div>

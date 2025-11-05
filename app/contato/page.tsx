@@ -1,7 +1,8 @@
 "use client"
 
 import type React from "react"
-import { Mail, MessageCircle, Send, Clock } from "lucide-react"
+import { Mail, Clock } from "lucide-react"
+import { WhatsAppIcon } from "@/components/WhatsAppIcon"
 import { useState } from "react"
 
 export default function ContatoPage() {
@@ -22,34 +23,26 @@ export default function ContatoPage() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white mb-8">
+      <div className="bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl p-8 md:p-12 text-white mb-8">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Entre em Contato</h1>
-        <p className="text-xl text-indigo-100">Estamos aqui para ajudar! Envie sua mensagem ou dúvida.</p>
+        <p className="text-xl text-green-100">Estamos aqui para ajudar! Envie sua mensagem ou dúvida.</p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-          <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Mail className="w-6 h-6 text-indigo-600" />
+          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Mail className="w-6 h-6 text-green-600" />
           </div>
           <h3 className="font-semibold text-slate-900 mb-2">Email</h3>
-          <p className="text-sm text-slate-600">contato@belotoofertas.com.br</p>
+          <p className="text-sm text-slate-600">contato@belotoplays.com.br</p>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm p-6 text-center">
           <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <MessageCircle className="w-6 h-6 text-green-600" />
+            <WhatsAppIcon className="w-6 h-6 text-green-600" />
           </div>
           <h3 className="font-semibold text-slate-900 mb-2">WhatsApp</h3>
-          <p className="text-sm text-slate-600">(11) 99999-9999</p>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Send className="w-6 h-6 text-blue-600" />
-          </div>
-          <h3 className="font-semibold text-slate-900 mb-2">Telegram</h3>
-          <p className="text-sm text-slate-600">@belotoofertas</p>
+          <p className="text-sm text-slate-600">+55 11 98810-2938</p>
         </div>
       </div>
 
@@ -115,7 +108,7 @@ export default function ContatoPage() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all"
+              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all"
             >
               Enviar Mensagem
             </button>
@@ -123,9 +116,9 @@ export default function ContatoPage() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-6">
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Clock className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -168,26 +161,15 @@ export default function ContatoPage() {
           <div className="bg-white rounded-xl shadow-sm p-6">
             <h3 className="font-semibold text-slate-900 mb-4">Siga-nos nas Redes Sociais</h3>
             <p className="text-sm text-slate-600 mb-4">Fique por dentro das melhores ofertas em tempo real!</p>
-            <div className="flex gap-3">
-              <a
-                href="https://wa.me/5511999999999"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 transition-colors"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span className="text-sm font-medium">WhatsApp</span>
-              </a>
-              <a
-                href="https://t.me/belotoofertas"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 transition-colors"
-              >
-                <Send className="w-4 h-4" />
-                <span className="text-sm font-medium">Telegram</span>
-              </a>
-            </div>
+            <a
+              href="https://sndflw.com/i/brJkW0O45v6fRSvG9HPu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
+            >
+              <WhatsAppIcon className="w-5 h-5" />
+              <span className="font-medium">Entrar no Grupo do WhatsApp</span>
+            </a>
           </div>
         </div>
       </div>
