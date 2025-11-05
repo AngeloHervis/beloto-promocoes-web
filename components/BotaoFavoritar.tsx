@@ -1,69 +1,54 @@
-"use client";
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
-import { api } from '@/services/api';
+"use client"
+import { useState } from "react"
+import { useAuth } from "@/contexts/AuthContext"
+import { useRouter } from "next/navigation"
+import { api } from "@/services/api"
 
 interface BotaoFavoritarProps {
-  ofertaId: string;
-  className?: string;
+  ofertaId: string
+  className?: string
 }
 
 export function BotaoFavoritar({ ofertaId, className }: BotaoFavoritarProps) {
-  const { token, usuario } = useAuth();
-  const router = useRouter();
-  const [estaFavoritado, setEstaFavoritado] = useState<boolean>(false);
-  const [carregando, setCarregando] = useState<boolean>(false);
-
-  useEffect(() => {
-    const verificarFavorito = async () => {
-      if (!token) return;
-      try {
-        const { data } = await api.get<{ favoritado: boolean }>(`/favoritos/${ofertaId}/status`);
-        setEstaFavoritado(data.favoritado ?? false);
-      } catch {
-        // Ignora erro silenciosamente
-      }
-    };
-    verificarFavorito();
-  }, [token, ofertaId]);
+  const { token, usuario } = useAuth()
+  const router = useRouter()
+  const [estaFavoritado, setEstaFavoritado] = useState<boolean>(false)
+  const [carregando, setCarregando] = useState<boolean>(false)
 
   const toggleFavorito = async () => {
     if (!token || !usuario) {
-      router.push('/login');
-      return;
+      router.push("/login")
+      return
     }
 
-    setCarregando(true);
+    setCarregando(true)
     try {
       if (estaFavoritado) {
-        await api.delete(`/favoritos/${ofertaId}`);
-        setEstaFavoritado(false);
+        await api.delete(`/favoritos/${ofertaId}`)
+        setEstaFavoritado(false)
       } else {
-        await api.post(`/favoritos/${ofertaId}`);
-        setEstaFavoritado(true);
+        await api.post(`/favoritos/${ofertaId}`)
+        setEstaFavoritado(true)
       }
     } catch (error) {
-      console.error('Erro ao favoritar:', error);
+      console.error("Erro ao favoritar:", error)
     } finally {
-      setCarregando(false);
+      setCarregando(false)
     }
-  };
+  }
 
   return (
     <button
       onClick={toggleFavorito}
       disabled={carregando}
       className={`inline-flex items-center justify-center rounded p-1.5 transition-colors ${
-        estaFavoritado
-          ? 'text-red-500 hover:text-red-600'
-          : 'text-slate-400 hover:text-red-500'
-      } disabled:opacity-50 ${className ?? ''}`.trim()}
-      aria-label={estaFavoritado ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+        estaFavoritado ? "text-red-500 hover:text-red-600" : "text-slate-400 hover:text-red-500"
+      } disabled:opacity-50 ${className ?? ""}`.trim()}
+      aria-label={estaFavoritado ? "Remover dos favoritos" : "Adicionar aos favoritos"}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        fill={estaFavoritado ? 'currentColor' : 'none'}
+        fill={estaFavoritado ? "currentColor" : "none"}
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
@@ -76,5 +61,5 @@ export function BotaoFavoritar({ ofertaId, className }: BotaoFavoritarProps) {
         />
       </svg>
     </button>
-  );
+  )
 }

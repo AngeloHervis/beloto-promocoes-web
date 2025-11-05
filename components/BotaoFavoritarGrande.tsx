@@ -1,8 +1,11 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import type React from "react"
+
 import { Heart } from "lucide-react"
 import { api } from "@/services/api"
 import { useAuth } from "@/contexts/AuthContext"
+import { useRouter } from "next/navigation"
 
 interface Props {
   ofertaId: string
@@ -10,37 +13,31 @@ interface Props {
 }
 
 export function BotaoFavoritarGrande({ ofertaId, className = "" }: Props) {
-  const { usuario } = useAuth()
+  const { usuario, token } = useAuth()
+  const router = useRouter()
   const [favoritado, setFavoritado] = useState<boolean>(false)
   const [carregando, setCarregando] = useState<boolean>(false)
 
-  useEffect(() => {
-    const verificar = async () => {
-      if (!usuario) return
-      try {
-        const { data } = await api.get<{ favoritado: boolean }>(`/favoritos/verificar/${ofertaId}`)
-        setFavoritado(data.favoritado)
-      } catch {}
-    }
-    verificar()
-  }, [ofertaId, usuario])
+  const alternar = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
 
-  const alternar = async () => {
-    if (!usuario) {
-      alert("Faça login para favoritar ofertas")
+    if (!usuario || !token) {
+      router.push("/login")
       return
     }
+
     setCarregando(true)
     try {
       if (favoritado) {
         await api.delete(`/favoritos/${ofertaId}`)
         setFavoritado(false)
       } else {
-        await api.post("/favoritos", { ofertaId })
+        await api.post(`/favoritos/${ofertaId}`)
         setFavoritado(true)
       }
-    } catch {
-      alert("Erro ao favoritar")
+    } catch (error) {
+      console.error("Erro ao favoritar:", error)
     } finally {
       setCarregando(false)
     }
@@ -50,7 +47,7 @@ export function BotaoFavoritarGrande({ ofertaId, className = "" }: Props) {
     <button
       onClick={alternar}
       disabled={carregando}
-      className={`transition-all ${className}`}
+      className={`transition-all disabled:opacity-50 ${className}`}
       aria-label={favoritado ? "Remover dos favoritos" : "Adicionar aos favoritos"}
     >
       <Heart
